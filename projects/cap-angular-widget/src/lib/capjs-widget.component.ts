@@ -11,7 +11,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import '@cap-js/widget';
+import '@cap.js/widget';
 
 @Component({
   selector: 'capjs-widget',

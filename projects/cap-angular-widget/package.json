@@ -1,6 +1,6 @@
 {
   "name": "@espressotutorialsgmbh/cap-angular-widget",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Angular 19+ Standalone Component for CapJS Widget",
   "license": "MIT",
   "author": "Espresso Tutorials GmbH",

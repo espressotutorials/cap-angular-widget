@@ -21,7 +21,7 @@ npm install cap-angular-widget
 Optional (falls nicht automatisch installiert):
 
 ```bash
-npm install @cap-js/widget
+npm install @cap.js/widget
 ```
 
 ---
