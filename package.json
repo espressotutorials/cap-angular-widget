@@ -1,5 +1,5 @@
 {
-  "name": "et-ngx-packages",
+  "name": "et-cao-angular-widget",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -17,6 +17,7 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "@cap.js/widget": "^0.1.18",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -32,6 +33,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "ng-packagr": "^19.2.0",
     "typescript": "~5.7.2"
   }
 }

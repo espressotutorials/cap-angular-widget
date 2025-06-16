@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "et-ngx-packages": {
+    "et-cao-angular-widget": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/et-ngx-packages",
+            "outputPath": "dist/et-cao-angular-widget",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -59,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "et-ngx-packages:build:production"
+              "buildTarget": "et-cao-angular-widget:build:production"
             },
             "development": {
-              "buildTarget": "et-ngx-packages:build:development"
+              "buildTarget": "et-cao-angular-widget:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -91,6 +91,42 @@
           }
         }
       }
+    },
+    "cap-angular-widget": {
+      "projectType": "library",
+      "root": "projects/cap-angular-widget",
+      "sourceRoot": "projects/cap-angular-widget/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/cap-angular-widget/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/cap-angular-widget/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/cap-angular-widget/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/cap-angular-widget/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
+  },
+  "cli": {
+    "analytics": "1d196b08-2f54-4f37-88f7-c3d2acef5f5a"
   }
 }
