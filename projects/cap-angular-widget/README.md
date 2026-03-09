@@ -15,7 +15,7 @@ An Angular 19+ Standalone Component wrapper for [CapJS](https://capjs.js.org/) â
 ## ðŸ“¦ Installation
 
 ```bash
-npm install cap-angular-widget
+npm install @espressotutorialsgmbh/cap-angular-widget
 ```
 
 Optional (falls nicht automatisch installiert):
