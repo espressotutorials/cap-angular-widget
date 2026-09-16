@@ -1,107 +1,112 @@
-# cap-angular-widget
+# @espressotutorialsgmbh/cap-angular-widget
 
-An Angular 19+ Standalone Component wrapper for [CapJS](https://capjs.js.org/) – a privacy-friendly CAPTCHA alternative.
+Angular 21 and 22 standalone component for the
+[Cap](https://trycap.dev/guide/) proof-of-work CAPTCHA. It wraps the official
+`cap-widget` web component and integrates it with Angular reactive forms.
 
-## ✨ Features
-
-- ✅ Angular **standalone component**
-- ✅ Reactive Forms support (`formControlName`)
-- ✅ Event handling (`solve`, `error`, `progress`, `reset`)
-- ✅ Light & Dark mode support
-- ✅ Custom styling via CSS
-
----
-
-## 📦 Installation
+## Installation
 
 ```bash
-npm install @espressotutorialsgmbh/cap-angular-widget
+npm install @espressotutorialsgmbh/cap-angular-widget cap-widget
 ```
 
-Optional (falls nicht automatisch installiert):
-
-```bash
-npm install @cap.js/widget
-```
-
----
-
-## 🚀 Usage
-
-### Import into your standalone component:
+## Usage
 
 ```ts
-import { CapjsWidgetComponent } from 'cap-angular-widget';
+import { Component } from '@angular/core';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CapjsWidgetComponent } from '@espressotutorialsgmbh/cap-angular-widget';
 
 @Component({
+  selector: 'app-contact-form',
   standalone: true,
   imports: [CapjsWidgetComponent, ReactiveFormsModule],
   template: `
-    <form [formGroup]="form">
+    <form>
       <capjs-widget
-        formControlName="captcha"
-        [endpoint]="'https://api.example.com/captcha'"
+        [formControl]="captcha"
+        endpoint="https://<your-instance>/<site-key>/"
+        [required]="true"
         theme="dark"
         (solve)="onSolve($event)"
-      ></capjs-widget>
+        (errorDetail)="onError($event)"
+      />
     </form>
   `
 })
-export class MyPageComponent {
-  form = this.fb.group({ captcha: [''] });
+export class ContactFormComponent {
+  readonly captcha = new FormControl<string | null>(null, Validators.required);
 
-  constructor(private fb: FormBuilder) {}
+  onSolve(token: string): void {
+    console.log('CAP token:', token);
+  }
 
-  onSolve(token: string) {
-    console.log('CAP solved:', token);
+  onError(error: { message: string; code?: string }): void {
+    console.error(error);
   }
 }
 ```
 
----
+The endpoint for Cap Standalone has the form
+`https://<your-instance>/<site-key>/`. Verify every generated token on your
+server through the Cap `siteverify` endpoint. Tokens are single-use.
 
-## 🎨 Themes
+## Inputs
 
-The component supports both `light` and `dark` themes via `[theme]` input.
+| Input | Type | Description |
+| --- | --- | --- |
+| `endpoint` | `string` | Required Cap API endpoint |
+| `workerCount` | `number` | Number of solver workers |
+| `hiddenFieldName` | `string` | Native form field name; defaults to `cap-token` |
+| `troubleshootingUrl` | `string` | URL shown when instrumentation is blocked |
+| `disableHaptics` | `boolean` | Disables vibration for this widget |
+| `required` | `boolean` | Enables the native Cap required state |
+| `theme` | `'light' \| 'dark'` | Wrapper color theme |
+| `customFetch` | `typeof fetch` | Sets `window.CAP_CUSTOM_FETCH` before loading Cap |
+| `customWasmUrl` | `string` | Sets `window.CAP_CUSTOM_WASM_URL` |
+| `cssNonce` | `string` | CSP nonce for injected styles |
+| `scriptNonce` | `string` | CSP nonce for injected scripts |
 
-You can also apply your own styles using `::ng-deep` or global styles:
+The supported localization inputs are `i18nInitial`, `i18nVerifying`,
+`i18nSolved`, `i18nError`, `i18nTroubleshooting`, `i18nWasmDisabled`,
+`i18nGroupAria`, `i18nVerifyAria`, `i18nVerifyingAria`,
+`i18nVerifiedAria`, `i18nRequired`, and `i18nErrorAria`.
+
+`customWaspUrl` remains available as a deprecated alias for the corrected
+`customWasmUrl` input. Cap's fetch, WASM, and CSP settings are global browser
+settings. Use the same settings for all widget instances on a page.
+
+## Outputs
+
+| Output | Value |
+| --- | --- |
+| `solve` | Solved token |
+| `progress` | Progress from 0 to 100 |
+| `error` | Error message, kept for backwards compatibility |
+| `errorDetail` | Structured `{ message, code?, isCap? }` error |
+| `reset` | Emitted when Cap returns to its initial state |
+
+The component also exposes `solveWidget()` and `resetWidget()` for
+programmatic flows. Calling `FormControl.reset()` resets the underlying Cap
+widget, and the disabled control state blocks interaction.
+
+## Styling
+
+The wrapper forwards Cap's CSS custom properties to the underlying web
+component. They can be defined globally:
 
 ```css
-cap-widget.dark {
-  --cap-background: #111;
-  --cap-color: white;
+cap-widget {
+  --cap-background: #fdfdfd;
+  --cap-color: #212121;
+  --cap-border-radius: 14px;
+  --cap-widget-width: 260px;
 }
 ```
 
----
+See the [official widget guide](https://trycap.dev/guide/widget.html) for the
+complete list of CSS properties and server-side verification instructions.
 
-## 🧪 Events
-
-| Event     | Description              |
-|-----------|--------------------------|
-| `solve`   | Emits the solved token   |
-| `error`   | Emits error message      |
-| `progress`| Emits numeric progress   |
-| `reset`   | Emits when reset happens |
-
----
-
-## 🛠 Inputs
-
-| Input         | Type     | Description                           |
-|---------------|----------|---------------------------------------|
-| `endpoint`    | `string` | **Required.** API endpoint            |
-| `theme`       | `string` | `'light'` (default) or `'dark'`       |
-| `workerCount` | `number` | Optional worker count                 |
-| `i18n*`       | `string` | Internationalization labels           |
-| `customFetch` | `func`   | Optional override for fetch           |
-| `customWaspUrl` | `string` | Override the WASM URL               |
-
----
-
-## 📄 License
+## License
 
 MIT
-
-### Developed by
-[Espresso Tutorials GmbH](https://www.espresso-tutorials.com/)

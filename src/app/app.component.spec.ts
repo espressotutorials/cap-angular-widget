@@ -1,29 +1,21 @@
 import { TestBed } from '@angular/core/testing';
+
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent]
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have the 'et-cao-angular-widget' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('et-cao-angular-widget');
-  });
-
-  it('should render title', () => {
+  it('renders the Cap Angular Widget demo', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, et-cao-angular-widget');
+
+    expect(fixture.nativeElement.querySelector('h1')?.textContent).toContain(
+      'CAP Angular Widget'
+    );
+    expect(fixture.nativeElement.querySelector('capjs-widget')).not.toBeNull();
   });
 });

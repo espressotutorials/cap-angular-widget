@@ -10,8 +10,8 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "cap-angular-widget": [
-        "./dist/cap-angular-widget"
+      "@espressotutorialsgmbh/cap-angular-widget": [
+        "./projects/cap-angular-widget/src/public-api.ts"
       ]
     },
     "skipLibCheck": true,

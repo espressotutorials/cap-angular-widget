@@ -9,3 +9,8 @@ cap-widget.dark {
   --cap-spinner-color: white;
   --cap-spinner-background-color: rgba(255, 255, 255, 0.1);
 }
+
+capjs-widget.capjs-widget-disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
