@@ -41,4 +41,12 @@ jobs:
           while IFS= read -r line; do
             echo "::error file=src/app/app.component.spec.ts::$line"
           done < <(tail -n 40 npm-test-demo.log)
-      - run: npm run build
+      - name: Build library and demo
+        id: build
+        run: npm run build 2>&1 | tee npm-build.log
+      - name: Report build failure
+        if: failure() && steps.build.outcome == 'failure'
+        run: |
+          while IFS= read -r line; do
+            echo "::error file=package.json::$line"
+          done < <(tail -n 40 npm-build.log)
