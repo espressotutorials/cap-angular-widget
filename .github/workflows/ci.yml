@@ -23,6 +23,14 @@ jobs:
           while IFS= read -r line; do
             echo "::error file=package-lock.json::$line"
           done < <(tail -n 30 npm-ci.log)
-      - run: npm test
+      - name: Test library
+        id: test-library
+        run: npm test 2>&1 | tee npm-test.log
+      - name: Report library test failure
+        if: failure() && steps.test-library.outcome == 'failure'
+        run: |
+          while IFS= read -r line; do
+            echo "::error file=projects/cap-angular-widget/src/lib/capjs-widget.component.spec.ts::$line"
+          done < <(tail -n 40 npm-test.log)
       - run: npm run test:demo
       - run: npm run build
