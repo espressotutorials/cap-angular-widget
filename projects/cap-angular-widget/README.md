@@ -4,6 +4,9 @@ Angular 21 and 22 standalone component for the
 [Cap](https://trycap.dev/guide/) proof-of-work CAPTCHA. It wraps the official
 `cap-widget` web component and integrates it with Angular reactive forms.
 
+For existing applications, see the
+[German migration guide](https://github.com/espressotutorials/cap-angular-widget/blob/master/MIGRATION.md).
+
 ## Installation
 
 ```bash

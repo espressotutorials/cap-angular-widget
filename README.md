@@ -6,6 +6,8 @@ the official [Cap widget](https://trycap.dev/guide/widget.html).
 
 Package usage and API documentation are in the
 [library README](projects/cap-angular-widget/README.md).
+Existing applications can follow the German
+[migration guide](MIGRATION.md).
 
 ## Development
 
