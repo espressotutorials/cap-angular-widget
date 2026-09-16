@@ -32,5 +32,13 @@ jobs:
           while IFS= read -r line; do
             echo "::error file=projects/cap-angular-widget/src/lib/capjs-widget.component.spec.ts::$line"
           done < <(tail -n 40 npm-test.log)
-      - run: npm run test:demo
+      - name: Test demo
+        id: test_demo
+        run: npm run test:demo 2>&1 | tee npm-test-demo.log
+      - name: Report demo test failure
+        if: failure() && steps.test_demo.outcome == 'failure'
+        run: |
+          while IFS= read -r line; do
+            echo "::error file=src/app/app.component.spec.ts::$line"
+          done < <(tail -n 40 npm-test-demo.log)
       - run: npm run build
